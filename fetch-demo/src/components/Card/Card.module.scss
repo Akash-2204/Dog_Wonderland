@@ -1,0 +1,182 @@
+
+$breakpoint-md: 768px;
+$border-radius: 12px;
+$transition-speed: 0.3s;
+$futuristic-glow-color: rgba(0, 255, 255, 0.6); 
+$futuristic-border-color: rgba(0, 255, 255, 0.3);
+$card-bg-color: rgba(20, 20, 30, 0.7);
+$card-bg-blur: 8px; 
+$text-color-primary: #e0e0e0;
+$text-color-secondary: #a0a0a0;
+$text-color-accent: #00ffff; 
+$favorite-color: #f43f5e; 
+
+
+.card {
+  position: relative;
+  border-radius: $border-radius;
+  background-color: $card-bg-color;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  transition:
+    transform $transition-speed ease,
+    box-shadow $transition-speed ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow:
+      0 10px 25px rgba(0, 0, 0, 0.5),
+      0 0 20px $futuristic-glow-color;
+    border-color: $futuristic-border-color;
+  }
+
+  &:focus-visible {
+      outline: 2px solid $futuristic-glow-color;
+      outline-offset: 2px;
+  }
+}
+
+// --- Image Container ---
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-color: #222;
+}
+
+// --- Content Area ---
+.contentArea {
+  padding: 1rem;
+
+  @media (min-width: $breakpoint-md) {
+    padding: 1.5rem;
+  }
+}
+
+// --- Header (Name + Toggle) ---
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.dogName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: $text-color-accent;
+
+  @media (min-width: $breakpoint-md) {
+    font-size: 1.5rem;
+  }
+}
+
+.toggleIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $text-color-secondary;
+  font-size: 0.875rem;
+}
+
+.toggleText {
+   @media (max-width: $breakpoint-md ) {
+       display: none;
+   }
+}
+
+.arrowIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform $transition-speed ease;
+}
+
+// --- Details Section ---
+.details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height $transition-speed ease-out, opacity $transition-speed ease-out, margin-top $transition-speed ease-out, padding-top $transition-speed ease-out; // Ensure padding-top is transitioned
+  opacity: 0;
+  font-size: 0.9rem;
+  color: $text-color-secondary;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0;
+  padding-top: 0;
+
+
+  p {
+    margin-bottom: 0.5rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    strong {
+        color: $text-color-primary;
+        margin-right: 0.5em;
+    }
+  }
+
+   @media (min-width: $breakpoint-md) {
+       font-size: 1rem;
+   }
+}
+
+.favoriteButton {
+  display: inline-flex; 
+  align-items: center;
+  gap: 0.5rem; 
+  margin-top: 1rem; 
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid $text-color-secondary;
+  background-color: transparent;
+  color: $text-color-secondary;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: $text-color-primary;
+    border-color: $text-color-primary;
+  }
+
+  &.isFavorite {
+    border-color: $favorite-color;
+    color: $favorite-color;
+    background-color: rgba($favorite-color, 0.1); 
+
+    &:hover {
+        background-color: rgba($favorite-color, 0.2);
+        border-color: lighten($favorite-color, 10%);
+        color: lighten($favorite-color, 10%);
+    }
+
+    .favoriteIcon {
+        color: $favorite-color;
+    }
+  }
+}
+
+.favoriteIcon {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+
+
+.card.expanded {
+  .arrowIcon {
+    transform: rotate(180deg);
+  }
+
+  .details {
+    max-height: 300px; 
+    opacity: 1;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+}

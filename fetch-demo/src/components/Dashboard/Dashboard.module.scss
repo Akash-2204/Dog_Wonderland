@@ -1,0 +1,595 @@
+@use 'sass:color';
+
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+
+$primary-color: #4f46e5;
+$primary-hover-color: #4338ca;
+$primary-focus-ring: rgba(99, 102, 241, 0.5);
+$primary-active-bg: #e0e7ff;
+$primary-active-dark-bg: #3730a3;
+
+$secondary-color: #6b7280;
+$secondary-hover-color: #4b5563;
+$text-light: #f3f4f6;
+$text-dark: #1f2937;
+$text-muted-light: #9ca3af;
+$text-muted-dark: #4b5563;
+
+$background-light: #f9fafb;
+$background-dark: #111827;
+$card-bg-light: #ffffff;
+$card-bg-dark: #1f2937;
+
+$border-color-light: #e5e7eb;
+$border-color-dark: #374151;
+$border-radius: 0.5rem;
+$border-radius-sm: 0.375rem;
+
+$logout-button-color: #ef4444;
+$logout-button-hover-color: #dc2626;
+
+$modal-backdrop-color: rgba(10, 10, 20, 0.7);
+$modal-backdrop-blur: 5px;
+$modal-bg-light: $card-bg-light;
+$modal-bg-dark: color.adjust($card-bg-dark, $lightness: 5%);
+$modal-max-width: 500px;
+$modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+$modal-dark-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+
+.dashboardContainer {
+  padding: 1.5rem;
+  min-height: 100vh;
+  background-color: $background-light;
+  color: $text-dark;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: $background-dark;
+    color: $text-light;
+  }
+
+  @media (min-width: $breakpoint-md) {
+    padding: 2rem;
+  }
+}
+
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    @media (min-width: $breakpoint-md) {
+        margin-bottom: 2rem;
+    }
+}
+
+.pageTitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 0;
+
+  @media (min-width: $breakpoint-md) {
+    font-size: 2.25rem;
+  }
+}
+
+.baseButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: $border-radius-sm;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  &:focus-visible {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+      box-shadow: 0 0 0 3px $primary-focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.logoutButton {
+    @extend .baseButton;
+    background-color: transparent;
+    color: $secondary-color;
+    padding: 0.5rem 0.8rem;
+    box-shadow: none;
+    border: 1px solid $border-color-light;
+
+    &:hover:not(:disabled) {
+        background-color: color.adjust($background-light, $lightness: -3%);
+        color: $logout-button-color;
+        border-color: color.adjust($border-color-light, $lightness: -5%);
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba($secondary-color, 0.4);
+    }
+
+    @media (prefers-color-scheme: dark) {
+       border-color: $border-color-dark;
+       color: $text-muted-light;
+       &:hover:not(:disabled) {
+           background-color: color.adjust($background-dark, $lightness: 5%);
+           color: $logout-button-hover-color;
+           border-color: color.adjust($border-color-dark, $lightness: 10%);
+       }
+        &:focus-visible {
+          box-shadow: 0 0 0 3px rgba($text-muted-light, 0.4);
+        }
+   }
+}
+
+.logoutButtonIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.logoutButtonText {
+    @media (max-width: $breakpoint-sm ) {
+        display: none;
+    }
+}
+
+.searchSection {
+  background-color: $card-bg-light;
+  padding: 1.5rem;
+  border-radius: $border-radius;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid $border-color-light;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: $card-bg-dark;
+    border-color: $border-color-dark;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+}
+
+.selectControl {
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+.searchLabel {
+   display: block;
+   font-weight: 500;
+   font-size: 0.875rem;
+   margin-bottom: 0.5rem;
+   color: $text-muted-dark;
+   @media (prefers-color-scheme: dark) {
+       color: $text-muted-light;
+   }
+}
+
+.listboxWrapper {
+    position: relative;
+}
+
+.listboxButton {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    background-color: $card-bg-light;
+    padding: 0.65rem 1rem;
+    padding-right: 2.5rem;
+    border: 1px solid $border-color-light;
+    border-radius: $border-radius-sm;
+    text-align: left;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px $primary-focus-ring;
+    }
+     &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        background-color: color.adjust($background-light, $lightness: -5%);
+         @media (prefers-color-scheme: dark) {
+           background-color: color.adjust($background-dark, $lightness: 3%);
+         }
+    }
+
+    @media (prefers-color-scheme: dark) {
+       background-color: color.adjust($background-dark, $lightness: 7%);
+       border-color: $border-color-dark;
+       color: $text-light;
+       &:focus {
+           border-color: $primary-color;
+           box-shadow: 0 0 0 3px $primary-focus-ring;
+       }
+   }
+}
+
+.listboxButtonText {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1rem;
+    color: $text-dark;
+     @media (prefers-color-scheme: dark) {
+       color: $text-light;
+     }
+}
+
+.listboxButtonIcon {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    color: $text-muted-dark;
+     @media (prefers-color-scheme: dark) {
+       color: $text-muted-light;
+     }
+}
+
+.listboxOptions {
+    position: absolute;
+    margin-top: 0.25rem;
+    max-height: 20rem;
+    width: 100%;
+    overflow: auto;
+    border-radius: $border-radius-sm;
+    background-color: $card-bg-light;
+    padding: 0.25rem 0;
+    font-size: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid $border-color-light;
+    z-index: 20;
+
+    &:focus { outline: none; }
+
+    @media (prefers-color-scheme: dark) {
+       background-color: $card-bg-dark;
+       border-color: $border-color-dark;
+       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+   }
+}
+
+.listboxOption {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem 1rem;
+    padding-left: 2.5rem;
+    transition: background-color 0.1s ease, color 0.1s ease;
+    color: $text-dark;
+    @media (prefers-color-scheme: dark) {
+       color: $text-light;
+     }
+}
+
+.listboxOptionActive {
+    background-color: $primary-active-bg;
+    color: $primary-color;
+     @media (prefers-color-scheme: dark) {
+       background-color: $primary-active-dark-bg;
+       color: $text-light;
+     }
+}
+
+.listboxOptionText {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.listboxOptionSelectedText {
+    font-weight: 600;
+}
+
+.listboxOptionCheck {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: $primary-color;
+     @media (prefers-color-scheme: dark) {
+       color: color.adjust($primary-color, $lightness: 15%);
+     }
+}
+
+.listboxOptionCheckIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.listboxOptionDisabled {
+    padding: 0.5rem 1rem;
+    color: $text-muted-dark;
+    cursor: default;
+    @media (prefers-color-scheme: dark) {
+       color: $text-muted-light;
+     }
+}
+
+.transitionLeave { transition: opacity 0.1s ease-out; }
+.transitionLeaveFrom { opacity: 1; }
+.transitionLeaveTo { opacity: 0; }
+
+.searchButton {
+  @extend .baseButton;
+  background-color: $primary-color;
+  color: $text-light;
+  &:hover:not(:disabled) {
+    background-color: $primary-hover-color;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.resultsSection { margin-top: 2.5rem; }
+.resultsTitle { font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem; }
+
+.dogGrid {
+  align-items: start;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  @media (min-width: $breakpoint-sm) { gap: 2rem; }
+}
+
+.paginationControls {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $border-color-light;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+   @media (prefers-color-scheme: dark) { border-top-color: $border-color-dark; }
+}
+.pageSizeSelector {
+    display: flex; align-items: center; gap: 0.75rem;
+    label { font-size: 0.875rem; font-weight: 500; color: $text-muted-dark; @media (prefers-color-scheme: dark) { color: $text-muted-light; } }
+}
+.pageSizeSelectInput {
+    padding: 0.4rem 0.6rem; border-radius: $border-radius-sm; border: 1px solid $border-color-light; background-color: $card-bg-light; color: $text-dark; font-size: 0.875rem; min-width: 70px;
+    &:focus { border-color: $primary-color; outline: none; box-shadow: 0 0 0 3px $primary-focus-ring; }
+    @media (prefers-color-scheme: dark) { background-color: color.adjust($background-dark, $lightness: 7%); border-color: $border-color-dark; color: $text-light; &:focus { border-color: $primary-color; box-shadow: 0 0 0 3px $primary-focus-ring; } }
+}
+.resultsInfo { font-size: 0.875rem; color: $text-muted-dark; @media (prefers-color-scheme: dark) { color: $text-muted-light; } }
+.navigationButtons { display: flex; gap: 0.75rem; }
+.paginationButton {
+    @extend .baseButton; padding: 0.6rem 1rem; background-color: $card-bg-light; color: $text-dark; border: 1px solid $border-color-light; box-shadow: none;
+    &:hover:not(:disabled) { background-color: color.adjust($background-light, $lightness: -5%); border-color: color.adjust($border-color-light, $lightness: -5%); }
+    @media (prefers-color-scheme: dark) { background-color: color.adjust($background-dark, $lightness: 7%); border-color: $border-color-dark; color: $text-light; &:hover:not(:disabled) { background-color: color.adjust($background-dark, $lightness: 12%); border-color: color.adjust($border-color-dark, $lightness: 10%); } }
+}
+
+.actionButtons {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.matchButton {
+  @extend .baseButton;
+  background-color: color.adjust($primary-color, $lightness: -15%);
+  color: $text-light;
+  &:hover:not(:disabled) {
+    background-color: color.adjust($primary-color, $lightness: -20%);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.modal {
+    position: relative;
+    z-index: 50;
+}
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    background-color: $modal-backdrop-color;
+    backdrop-filter: blur($modal-backdrop-blur);
+    -webkit-backdrop-filter: blur($modal-backdrop-blur);
+}
+
+.modalBackdropEnter { transition: opacity 0.3s ease-out; }
+.modalBackdropEnterFrom { opacity: 0; }
+.modalBackdropEnterTo { opacity: 1; }
+.modalBackdropLeave { transition: opacity 0.2s ease-in; }
+.modalBackdropLeaveFrom { opacity: 1; }
+.modalBackdropLeaveTo { opacity: 0; }
+
+.modalScrollContainer {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+}
+
+.modalContentContainer {
+    display: flex;
+    min-height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+     @media (min-width: $breakpoint-sm) { padding: 2rem; }
+}
+
+.modalPanel {
+    width: 100%;
+    max-width: $modal-max-width;
+    transform: scale(1);
+    overflow: hidden;
+    border-radius: $border-radius;
+    background-color: $modal-bg-light;
+    padding: 1.5rem;
+    text-align: left;
+    box-shadow: $modal-shadow;
+    transition: all 0.3s ease-out;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    @media (prefers-color-scheme: dark) {
+        background-color: $modal-bg-dark;
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: $modal-dark-shadow;
+    }
+
+     @media (min-width: $breakpoint-sm) { padding: 2.5rem; }
+}
+
+.modalPanelEnter { transition: opacity 0.3s ease-out, transform 0.3s ease-out; }
+.modalPanelEnterFrom { opacity: 0; transform: scale(0.95); }
+.modalPanelEnterTo { opacity: 1; transform: scale(1); }
+.modalPanelLeave { transition: opacity 0.2s ease-in, transform 0.2s ease-in; }
+.modalPanelLeaveFrom { opacity: 1; transform: scale(1); }
+.modalPanelLeaveTo { opacity: 0; transform: scale(0.95); }
+
+
+.modalTitle {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    color: $text-dark;
+    padding-right: 2.5rem;
+
+    @media (prefers-color-scheme: dark) {
+        color: $text-light;
+    }
+     @media (min-width: $breakpoint-sm) {
+        font-size: 1.75rem;
+    }
+}
+
+.modalCloseButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.4rem;
+    border-radius: 50%;
+    background: none;
+    border: none;
+    color: $secondary-color;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+    svg {
+        width: 1.4rem;
+        height: 1.4rem;
+    }
+
+    &:hover {
+        background-color: rgba($secondary-color, 0.1);
+        color: $text-dark;
+        transform: scale(1.1);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px $primary-focus-ring;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        color: $text-muted-light;
+         &:hover {
+            background-color: rgba($text-muted-light, 0.15);
+            color: $text-light;
+        }
+         &:focus-visible {
+            box-shadow: 0 0 0 3px $primary-focus-ring;
+        }
+    }
+}
+
+
+.modalDogDetails {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    h4 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        color: $primary-color;
+        letter-spacing: 0.02em;
+    }
+    p {
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        color: $text-muted-dark;
+         @media (prefers-color-scheme: dark) {
+            color: $text-muted-light;
+         }
+        strong {
+            font-weight: 500;
+            color: $text-dark;
+             @media (prefers-color-scheme: dark) {
+                color: $text-light;
+             }
+        }
+    }
+}
+
+.modalImageContainer {
+    position: relative;
+    width: 80%;
+    max-width: 280px;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto 1.5rem auto;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #333;
+    border: 4px solid $card-bg-light;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+     @media (prefers-color-scheme: dark) {
+        border-color: $card-bg-dark;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.modalActions {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+.modalOkButton {
+    @extend .baseButton;
+    background-color: $primary-color;
+    color: $text-light;
+    padding: 0.8rem 2rem;
+
+    &:hover:not(:disabled) {
+        background-color: $primary-hover-color;
+        box-shadow: 0 4px 10px rgba($primary-color, 0.3);
+    }
+}
